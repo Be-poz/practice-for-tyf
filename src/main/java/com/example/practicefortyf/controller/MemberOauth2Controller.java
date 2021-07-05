@@ -103,4 +103,54 @@ public class MemberOauth2Controller {
         return "birthday: " + birthday + " name: " + name + " email : " + email;
     }
 
+    @GetMapping("/google")
+    public Object googleOauthRedirect(@RequestParam String code, @RequestParam String scope) {
+        RestTemplate rt = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded");
+
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", "973469585834-r6qefacm23dk18sokil1jl81hthns586.apps.googleusercontent.com");
+        params.add("client_secret", "DkhetvEVybeNapeen0fceZ7X");
+        params.add("code", code);
+        params.add("redirect_uri", "http://localhost:8080/login/oauth2/code/google");
+
+        HttpEntity<LinkedMultiValueMap<String, String>> tokenRequest = new HttpEntity<>(params, headers);
+
+        ResponseEntity<String> tokenResponse = rt.exchange(
+                "https://oauth2.googleapis.com/token",
+                HttpMethod.POST,
+                tokenRequest,
+                String.class
+        );
+
+        JSONObject tokenJsonObject = new JSONObject(tokenResponse.getBody());
+        String accessToken = tokenJsonObject.getString("access_token");
+        //문서에는 refresh_token 준다고 나와있는데 이게 방금전까지는 없었다가 scope를 달리하니깐 생김 ;; 또 없어짐;;
+        String idToken = tokenJsonObject.getString("id_token");
+//        String refreshToken = tokenJsonObject.getString("refresh_token");
+        String tokenType = tokenJsonObject.getString("token_type");
+
+        headers.add("Authorization", tokenType + " " + accessToken);
+        HttpEntity<Object> userInfoRequest = new HttpEntity<>(headers);
+
+        ResponseEntity<String> userInfoResponse = rt.exchange(
+                "https://www.googleapis.com/oauth2/v2/userinfo",
+                HttpMethod.GET,
+                userInfoRequest,
+                String.class
+        );
+
+        JSONObject userInfoJsonObject = new JSONObject(userInfoResponse.getBody());
+        /*
+        {"name":"강승윤","id":"105397262882358643457","verified_email":true,"given_name":"승윤","locale":"ko","family_name":"강","email":"kangsy763@gmail.com","picture":"https://lh3.googleusercontent.com/a/AATXAJxka1JmPM8P_7mkthOQoBEqBtBEWOoohjj-ZBrp=s96-c"}
+         */
+        System.out.println(userInfoJsonObject);
+        String name = userInfoJsonObject.getString("name");
+        String email = userInfoJsonObject.getString("email");
+
+        return "email: " + email + " name: " + name;
+    }
+
 }
