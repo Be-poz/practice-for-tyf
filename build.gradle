@@ -32,3 +32,9 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+processResources.dependsOn('copySecret')
+task copySecret(type: Copy) {
+    from '../thisisprivate/application-key.yml'
+    into 'src/main/resources'
+}
