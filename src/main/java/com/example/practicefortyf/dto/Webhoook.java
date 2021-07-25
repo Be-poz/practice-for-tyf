@@ -1,0 +1,4 @@
+package com.example.practicefortyf.dto;
+
+public class Webhoook {
+}
