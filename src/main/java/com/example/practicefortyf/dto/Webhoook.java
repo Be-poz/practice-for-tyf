@@ -4,4 +4,5 @@ public class Webhoook {
     String name;
     String branch;
     String branch2;
+    String branch3;
 }
