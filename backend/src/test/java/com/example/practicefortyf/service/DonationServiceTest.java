@@ -31,9 +31,9 @@ class DonationServiceTest {
     @Test
     public void test() {
         Member bepoz = memberService.createMember("bepoz");
-        Member dani = memberService.createMember("dani");
+        Member jpas = memberService.createMember("dani");
 
-        Donation donation = donationService.createDonation(bepoz, dani);
+        Donation donation = donationService.createDonation(bepoz, jpas);
 
         em.flush();
         em.clear();
