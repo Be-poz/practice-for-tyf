@@ -23,4 +23,12 @@ public class DonationService {
         return donationRepository.findById(id)
                 .orElseThrow();
     }
+
+    public String lazyTest(Long id) {
+        Donation byId = donationRepository.findById(id).orElseThrow();
+        System.out.println("asdf");
+        String name = byId.getDonator().getName();
+        System.out.println("qwer");
+        return name;
+    }
 }

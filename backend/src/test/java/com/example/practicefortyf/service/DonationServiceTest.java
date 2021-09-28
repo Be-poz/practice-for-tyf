@@ -1,7 +1,9 @@
 package com.example.practicefortyf.service;
 
 import com.example.practicefortyf.domain.Donation;
+import com.example.practicefortyf.domain.Master;
 import com.example.practicefortyf.domain.Member;
+import com.example.practicefortyf.domain.Slave;
 import org.apache.juli.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +40,25 @@ class DonationServiceTest {
         em.flush();
         em.clear();
 
-        Donation donation1 = donationService.findDonation(donation.getId());
-        System.out.println("asdf");
-        Member creator = donation1.getCreator();
-        System.out.println("asdf");
-        System.out.println(creator.getName());
-        System.out.println("asdf");
-        System.out.println(donation1.getCreator().getName());
-        System.out.println("asdf");
-        System.out.println(donation1.getDonator().getName());
-        System.out.println("asdf");
+        System.out.println(donationService.lazyTest(donation.getId()));
     }
 
+    @Test
+    public void masterSlave() {
+        Master master = new Master("master");
+        Slave slave = new Slave("slave");
+
+        em.persist(slave);
+        master.setSlave(slave);
+        em.persist(master);
+
+        em.flush();
+        em.clear();
+        System.out.println("asdf");
+        Master findMaster = em.find(Master.class, master.getId());
+        System.out.println("asdf");
+        String name = findMaster.getSlave().getName();
+        System.out.println("asdf");
+        System.out.println(name);
+    }
 }
