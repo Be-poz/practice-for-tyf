@@ -17,3 +17,7 @@ logging.level:
 
 naver:
   key: asdf
+
+person:
+  name: defaultBepoz
+  age: 100

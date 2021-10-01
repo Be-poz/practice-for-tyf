@@ -6,10 +6,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProfileYaml {
 
-    @Value("${bepoz.name}")
-    private String key;
+    @Value("${person.name}")
+    private String name;
 
-    public String getKey() {
-        return key;
+    @Value("${person.age}")
+    private String age;
+
+    @Value("${person.weight}")
+    private String weight;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getWeight() {
+        return weight;
     }
 }
