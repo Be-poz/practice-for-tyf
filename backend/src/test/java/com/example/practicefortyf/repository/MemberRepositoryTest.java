@@ -1,7 +1,9 @@
 package com.example.practicefortyf.repository;
 
 import com.example.practicefortyf.domain.Donation;
+import com.example.practicefortyf.domain.Master;
 import com.example.practicefortyf.domain.Member;
+import com.example.practicefortyf.domain.Slave;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,8 @@ class MemberRepositoryTest {
     MemberRepository memberRepository;
     @Autowired
     DonationRepository donationRepository;
+    @Autowired
+    MasterRepository masterRepository;
     @PersistenceContext
     EntityManager em;
 
@@ -48,5 +52,22 @@ class MemberRepositoryTest {
         System.out.println(findMember.getName());
         System.out.println("asdf");
 
+    }
+
+    @Test
+    public void cascadeTest() {
+        Master master = new Master("master");
+        Slave slave = new Slave("slave");
+        master.setSlave(slave);
+
+        masterRepository.save(master);
+        em.flush();
+        em.clear();
+
+        Master findMaster = masterRepository.getById(master.getId());
+        findMaster.getSlave().setName("asdf");
+        em.flush();
+        em.clear();
+        System.out.println("asdf");
     }
 }
