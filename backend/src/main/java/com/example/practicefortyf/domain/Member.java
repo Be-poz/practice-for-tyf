@@ -24,7 +24,7 @@ public class Member {
     private List<Donation> donatedDonations = new ArrayList<>();
 
     @OneToMany(mappedBy = "creator")
-    private List<Donation> givenDonations = new ArrayList<>();
+    public List<Donation> givenDonations = new ArrayList<>();
 
     private String name;
 

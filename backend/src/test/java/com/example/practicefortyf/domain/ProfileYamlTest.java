@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("bepoz")
 class ProfileYamlTest {
 
     @Autowired
@@ -21,11 +20,9 @@ class ProfileYamlTest {
     @DisplayName("Value 어노테이션을 이용한 yml 파일 읽기")
     public void getYamlProperties() {
         assertThat(profileYaml.getName()).isNotNull();
-        assertThat(profileYaml.getWeight()).isNotNull();
         assertThat(profileYaml.getAge()).isNotNull();
 
         assertThat(profileYaml.getName()).isEqualTo("bepozBepoz");
-        assertThat(profileYaml.getWeight()).isEqualTo("1000");
         assertThat(profileYaml.getAge()).isEqualTo("100");
     }
 }

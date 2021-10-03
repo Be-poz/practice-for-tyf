@@ -12,8 +12,6 @@ public class ProfileYaml {
     @Value("${person.age}")
     private String age;
 
-    @Value("${person.weight}")
-    private String weight;
 
     public String getName() {
         return name;
@@ -21,9 +19,5 @@ public class ProfileYaml {
 
     public String getAge() {
         return age;
-    }
-
-    public String getWeight() {
-        return weight;
     }
 }

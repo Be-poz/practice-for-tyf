@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -37,21 +38,19 @@ class MemberRepositoryTest {
         em.persist(donator);
 
         Donation donation = new Donation(1000L);
-        Donation donation2 = new Donation(2000L);
         donation.setCreator(creator);
         donation.setDonator(donator);
-        donation2.setCreator(donator);
-        donation2.setDonator(creator);
         em.persist(donation);
-        em.persist(donation2);
 
         em.flush();
         em.clear();
 
-        Member findMember = memberRepository.getById(creator.getId());
-        System.out.println(findMember.getName());
-        System.out.println("asdf");
-
+        Member findCreator = memberRepository.findById(creator.getId()).get();
+        System.out.println("***");
+        List<Donation> givenDonations = findCreator.getGivenDonations();
+        System.out.println("&&&");
+        System.out.println(givenDonations.contains(donation));
+        System.out.println("###");
     }
 
     @Test
