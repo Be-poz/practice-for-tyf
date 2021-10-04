@@ -32,6 +32,8 @@ public class Donation {
     @JoinColumn(name = "creator_id")
     private Member creator;
 
+    private String message;
+
     public Donation(Long id, Long amount) {
         this.id = id;
         this.amount = amount;
