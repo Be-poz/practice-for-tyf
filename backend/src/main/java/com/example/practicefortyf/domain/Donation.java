@@ -11,11 +11,6 @@ import java.util.Objects;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"donator_id", "creator_id"})
-        }
-)
 public class Donation {
 
     @Id
@@ -34,9 +29,15 @@ public class Donation {
 
     private String message;
 
-    public Donation(Long id, Long amount) {
+    public Donation(Long id, Long amount, String message) {
         this.id = id;
         this.amount = amount;
+        this.message = message;
+    }
+
+    public Donation(Long amount, String message) {
+        this.amount = amount;
+        this.message = message;
     }
 
     public Donation(Long amount) {

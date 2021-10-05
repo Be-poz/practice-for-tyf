@@ -26,6 +26,10 @@ public class Member {
     @OneToMany(mappedBy = "creator")
     public List<Donation> givenDonations = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     private String name;
 
     public Member(Long id, String name) {
@@ -34,6 +38,11 @@ public class Member {
     }
 
     public Member(String name) {
+        this.name = name;
+    }
+
+    public Member(Account account, String name) {
+        this.account = account;
         this.name = name;
     }
 
